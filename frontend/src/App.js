@@ -7,8 +7,10 @@ import DashboardHome from './pages/DashboardHome';
 import AjoutInfos from './pages/AjoutInfos';
 import Archives from './pages/Archives';
 import Utilisateurs from './pages/Utilisateurs'; // ✅ import
-import Paramètres from './pages/Paramètres'; 
+import Exploration from './pages/Exploration'; 
+import Setting from './pages/Setting'; 
 import Rapports from './pages/Rapports'; 
+import TableCrud from './pages/TableCrud'; 
 import Site from './pages/Site';
 
 import 'leaflet/dist/leaflet.css';
@@ -28,7 +30,9 @@ function App() {
           <Route index element={<DashboardHome />} />
           <Route path="ajout" element={<AjoutInfos />} />
           <Route path="archives" element={<Archives />} />
-          <Route path="parametres" element={<Paramètres />} />
+          <Route path="exploration" element={<Exploration />} />
+          <Route path="setting" element={<Setting />} />
+          <Route path="tableCrud" element={<TableCrud />} />
           <Route path="utilisateurs" element={<Utilisateurs />} /> {/* ✅ route ajoutée */}
           <Route path="rapports" element={<Rapports />} />
           <Route path="/dashboard/sites" element={<Site />} />

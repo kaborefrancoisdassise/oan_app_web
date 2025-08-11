@@ -46,28 +46,28 @@ const ExplorationRegionale = () => {
 
   useEffect(() => {
     if (selectedCommune) {
-      const commune = communes.find(c => c.id_commune == selectedCommune);
+      const commune = communes.find(c => c.id_commune === selectedCommune);
       if (commune) {
         setSelectedProvince(commune.id_province.toString());
       }
     }
-  }, [selectedCommune]);
+  }, [selectedCommune, communes]);
 
   useEffect(() => {
     if (selectedProvince) {
-      const province = provinces.find(p => p.id_province == selectedProvince);
+      const province = provinces.find(p => p.id_province === selectedProvince);
       if (province) {
         setSelectedRegion(province.id_region.toString());
       }
     }
-  }, [selectedProvince]);
+  }, [selectedProvince, provinces]);
 
   useEffect(() => {
     if (selectedCommune) {
       axios.get(`http://localhost/app-web/backend/api/villages.php?id_commune=${selectedCommune}`)
         .then(res => {
           setVillages(res.data || []);
-          const commune = communes.find(c => c.id_commune == selectedCommune);
+          const commune = communes.find(c => c.id_commune === selectedCommune);
           setTitre(`Villages de la commune : ${commune?.nom_commune || ''}`);
         })
         .catch(err => console.error(err));
@@ -75,7 +75,7 @@ const ExplorationRegionale = () => {
       axios.get(`http://localhost/app-web/backend/api/villages_par_province.php?id_province=${selectedProvince}`)
         .then(res => {
           setVillages(res.data || []);
-          const province = provinces.find(p => p.id_province == selectedProvince);
+          const province = provinces.find(p => p.id_province === selectedProvince);
           setTitre(`Villages de la province : ${province?.nom_province || ''}`);
         })
         .catch(err => console.error(err));
@@ -83,14 +83,14 @@ const ExplorationRegionale = () => {
       axios.get(`http://localhost/app-web/backend/api/villages_par_region.php?id_region=${selectedRegion}`)
         .then(res => {
           setVillages(res.data || []);
-          const region = regions.find(r => r.id_region == selectedRegion);
+          const region = regions.find(r => r.id_region === selectedRegion);
           setTitre(`Villages de la région : ${region?.nom_region || ''}`);
         })
         .catch(err => console.error(err));
     } else {
       setTitre('Tous les villages');
     }
-  }, [selectedRegion, selectedProvince, selectedCommune]);
+  }, [selectedRegion, selectedProvince, selectedCommune, communes, provinces, regions]);
 
   const handleVillageClick = async (village) => {
     setSelectedVillage(village);
