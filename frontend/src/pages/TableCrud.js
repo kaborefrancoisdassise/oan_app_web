@@ -209,30 +209,38 @@ export default function TableCrud({ table }) {
       <hr />
 
       {/* Tableau des données */}
-      <h6>Liste ({total})</h6>
-      {loading ? <p>Chargement...</p> : (
-        <div className="table-responsive">
-          <table className="table table-sm table-bordered">
-            <thead>
-              <tr>
-                {schema.map(c => <th key={c.Field}>{c.Field}</th>)}
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r, i) => (
-                <tr key={i}>
-                  {schema.map(c => <td key={c.Field}>{String(r[c.Field] ?? '')}</td>)}
-                  <td>
-                    <button className="btn btn-sm btn-outline-primary me-1" onClick={() => startEdit(r)}>Edit</button>
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => confirmDelete(r)}>Del</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+     {/* Tableau des données */}
+<h6>Liste ({total})</h6>
+{loading ? <p>Chargement...</p> : (
+  <div className="table-responsive">
+    <table className="table table-sm table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          {schema
+            .filter(c => c.Field !== pkName) // exclure la PK
+            .map(c => <th key={c.Field}>{c.Field}</th>)}
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i}>
+            <td>{(page - 1) * pageSize + i + 1}</td>
+            {schema
+              .filter(c => c.Field !== pkName) // exclure la PK
+              .map(c => <td key={c.Field}>{String(r[c.Field] ?? '')}</td>)}
+            <td>
+              <button className="btn btn-sm btn-outline-primary me-1" onClick={() => startEdit(r)}>Edit</button>
+              <button className="btn btn-sm btn-outline-danger" onClick={() => confirmDelete(r)}>Del</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
 
       {/* Pagination */}
       <div className="d-flex justify-content-between align-items-center mt-2">
